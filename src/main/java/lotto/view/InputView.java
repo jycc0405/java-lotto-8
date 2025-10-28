@@ -84,15 +84,21 @@ public class InputView {
     }
 
     private List<String> splitTokens(String s) {
-        return Arrays.stream(s.split(",")).map(String::trim).collect(Collectors.toList());
+        return Arrays
+                .stream(s.split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
     }
 
     private List<Integer> parseTokens(List<String> tokens) {
-        return tokens.stream().map(this::parseIntOrThrow).toList();
+        return tokens
+                .stream()
+                .map(this::parseIntOrThrow)
+                .toList();
     }
 
     private void validateSize(List<Integer> numbers) {
-        if (numbers.size() != settings.getWinningNumberCount()) {
+        if (numbers.size() != settings.getLottoNumberPickCount()) {
             throw new IllegalArgumentException("[ERROR] 당첨 번호는 6개여야 합니다.");
         }
     }

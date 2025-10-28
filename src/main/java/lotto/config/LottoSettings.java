@@ -2,13 +2,13 @@ package lotto.config;
 
 public final class LottoSettings {
     private final int unit;
-    private final int winningNumberCount;
+    private final int lottoNumberPickCount;
     private final int minLottoNumber;
     private final int maxLottoNumber;
 
-    public LottoSettings(int unit, int winningNumberCount,int minLottoNumber,int maxLottoNumber) {
+    public LottoSettings(int unit, int lottoNumberPickCount, int minLottoNumber, int maxLottoNumber) {
         this.unit = unit;
-        this.winningNumberCount = winningNumberCount;
+        this.lottoNumberPickCount = lottoNumberPickCount;
         this.minLottoNumber = minLottoNumber;
         this.maxLottoNumber = maxLottoNumber;
     }
@@ -21,8 +21,8 @@ public final class LottoSettings {
         return unit;
     }
 
-    public int getWinningNumberCount() {
-        return winningNumberCount;
+    public int getLottoNumberPickCount() {
+        return lottoNumberPickCount;
     }
 
     public int getMinLottoNumber(){
