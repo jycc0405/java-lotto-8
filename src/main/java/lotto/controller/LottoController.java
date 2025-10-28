@@ -1,12 +1,13 @@
 package lotto.controller;
 
 import lotto.domain.Lotto;
+import lotto.domain.WinningLotto;
+import lotto.dto.LottoResultDto;
 import lotto.service.LottoService;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
 import java.util.List;
-import java.util.Set;
 
 public class LottoController {
     private final LottoService lottoService;
@@ -24,10 +25,12 @@ public class LottoController {
         List<Lotto> userLottos = lottoService.buyLottos(money);
         outputView.printLottos(userLottos);
 
-        Set<Integer> winningNumbers = inputWinningNumbersLoop();
+        List<Integer> winningNumbers = inputWinningNumbersLoop();
         int bonus = inputBonusLoop(winningNumbers);
+        WinningLotto winningLotto = new WinningLotto(new Lotto(winningNumbers), bonus);
 
-
+        LottoResultDto result = lottoService.checkResult(userLottos, winningLotto);
+        outputView.printResult(result);
     }
 
     private int inputMoneyLoop() {
@@ -40,7 +43,7 @@ public class LottoController {
         }
     }
 
-    private Set<Integer> inputWinningNumbersLoop() {
+    private List<Integer> inputWinningNumbersLoop() {
         while (true) {
             try {
                 return inputView.inputWinningNumbers();
@@ -50,7 +53,7 @@ public class LottoController {
         }
     }
 
-    private int inputBonusLoop(Set<Integer> winningNumbers) {
+    private int inputBonusLoop(List<Integer> winningNumbers) {
         while (true) {
             try {
                 int bonus = inputView.inputBonusNumber();
@@ -62,7 +65,7 @@ public class LottoController {
         }
     }
 
-    private void validateBonusNotInWinningNumbers(Set<Integer> winningNumbers, int bonus) {
+    private void validateBonusNotInWinningNumbers(List<Integer> winningNumbers, int bonus) {
         if (winningNumbers.contains(bonus)) {
             throw new IllegalArgumentException("[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다.");
         }

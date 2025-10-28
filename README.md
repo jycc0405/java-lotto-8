@@ -104,17 +104,18 @@
 ```
 └── 📂 lotto/
     ├── 📄 Application.java
+    ├── 📂 config/
+    │   └── 📄 LottoSettings.java
     ├── 📂 controller/
     │   └── 📄 LottoController.java
     ├── 📂 domain/
     │   ├── 📄 Lotto.java
-    │   ├── 📄 WinningLotto.java
-    │   └── 📄 Rank.java
-    ├── 📂 service/
-    │   └── 📄 LottoService.java
+    │   ├── 📄 Rank.java
+    │   └── 📄 WinningLotto.java
     ├── 📂 dto/
     │   ├── 📄 LottoResultDto.java
-    │   └── 📄 LottoTicketDto.java
+    ├── 📂 service/
+    │   └── 📄 LottoService.java
     └── 📂 view/
         ├── 📄 InputView.java
         └── 📄 OutputView.java
@@ -140,6 +141,6 @@
 - **Rank** : 일치 개수에 따른 당첨 등수와 상금 정보를 관리
 - **LottoService** : 로또 구매, 당첨 결과 계산, 통계 및 수익률 산출
 - **LottoResultDto** : 사용자의 로또 당첨 결과와 통계 정보를 담는 데이터 전달 객체
-- **LottoTicketDto** : 개별 로또 티켓 번호를 담는 데이터 전달 객체
 - **InputView** : 사용자 입력 처리 및 입력 값 검증, 예외 발생
 - **OutputView** : 로또 구매 내역, 당첨 결과, 통계 정보 출력
+- **LottoSettings** : 로또 규칙을 설정, 저장

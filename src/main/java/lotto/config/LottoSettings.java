@@ -14,7 +14,7 @@ public final class LottoSettings {
     }
 
     public static LottoSettings defaults() {
-        return new LottoSettings(1000, 6,1,45);
+        return new LottoSettings(1000, 6, 1, 45);
     }
 
     public int getUnit() {
@@ -25,11 +25,11 @@ public final class LottoSettings {
         return lottoNumberPickCount;
     }
 
-    public int getMinLottoNumber(){
+    public int getMinLottoNumber() {
         return minLottoNumber;
     }
 
-    public int getMaxLottoNumber(){
+    public int getMaxLottoNumber() {
         return maxLottoNumber;
     }
 }

@@ -1,15 +1,14 @@
 package lotto.domain;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Lotto {
     private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
         validate(numbers);
-        numbers.sort(Comparator.naturalOrder());
-        this.numbers = numbers;
+        this.numbers = new ArrayList<>(numbers);
+        this.numbers.sort(Comparator.naturalOrder());
     }
 
     private void validate(List<Integer> numbers) {
@@ -20,5 +19,12 @@ public class Lotto {
 
     public List<Integer> getLottoNumbers(){
         return numbers;
+    }
+
+    public int countMatch(Lotto winningLotto){
+        Set<Integer> numberSet = new HashSet<>(numbers);
+        Set<Integer> winningSet = new HashSet<>(winningLotto.getLottoNumbers());
+        numberSet.retainAll(winningSet);
+        return numberSet.size();
     }
 }

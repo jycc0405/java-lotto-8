@@ -25,7 +25,7 @@ public class InputView {
         return money;
     }
 
-    public Set<Integer> inputWinningNumbers() {
+    public List<Integer> inputWinningNumbers() {
         System.out.println("당첨 번호를 입력해 주세요.");
         String line = readLine();
 
@@ -38,7 +38,7 @@ public class InputView {
         validateRange(winningNumbers);
         validateNoDuplicates(winningNumbers);
 
-        return new TreeSet<>(winningNumbers);
+        return winningNumbers;
     }
 
     public int inputBonusNumber() {
@@ -84,15 +84,13 @@ public class InputView {
     }
 
     private List<String> splitTokens(String s) {
-        return Arrays
-                .stream(s.split(","))
+        return Arrays.stream(s.split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
     }
 
     private List<Integer> parseTokens(List<String> tokens) {
-        return tokens
-                .stream()
+        return tokens.stream()
                 .map(this::parseIntOrThrow)
                 .toList();
     }
