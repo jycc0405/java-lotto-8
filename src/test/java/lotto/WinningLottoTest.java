@@ -20,7 +20,8 @@ public class WinningLottoTest {
     @DisplayName("보너스 번호가 당첨 번호와 중복되면 예외")
     @Test
     void bonusDuplicateWithWinningThrows() {
-        assertThatThrownBy(() -> factory.createWinningLotto(List.of(1, 2, 3, 4, 5, 6), 6))
+        Lotto winningLotto = factory.create(List.of(1, 2, 3, 4, 5, 6));
+        assertThatThrownBy(() -> factory.createWinningLotto(winningLotto, 6))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
