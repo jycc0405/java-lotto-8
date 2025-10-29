@@ -21,22 +21,19 @@ public class LottoController {
     }
 
     public void run() {
-        int money = inputMoneyLoop();
-        List<Lotto> userLottos = lottoService.buyLottos(money);
+        List<Lotto> userLottos = purchaseLottosLoop();
         outputView.printLottos(userLottos);
 
-        List<Integer> winningNumbers = inputWinningNumbersLoop();
-        int bonus = inputBonusLoop(winningNumbers);
-        WinningLotto winningLotto = new WinningLotto(new Lotto(winningNumbers), bonus);
-
+        WinningLotto winningLotto = createWinningLottoLoop();
         LottoResultDto result = lottoService.checkResult(userLottos, winningLotto);
         outputView.printResult(result);
     }
 
-    private int inputMoneyLoop() {
+    private List<Lotto> purchaseLottosLoop() {
         while (true) {
             try {
-                return inputView.inputMoney();
+                int money = inputView.inputMoney();
+                return lottoService.buyLottos(money);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
@@ -53,21 +50,26 @@ public class LottoController {
         }
     }
 
-    private int inputBonusLoop(List<Integer> winningNumbers) {
+    private int inputBonusLoop() {
         while (true) {
             try {
-                int bonus = inputView.inputBonusNumber();
-                validateBonusNotInWinningNumbers(winningNumbers, bonus);
-                return bonus;
+                return inputView.inputBonusNumber();
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
 
-    private void validateBonusNotInWinningNumbers(List<Integer> winningNumbers, int bonus) {
-        if (winningNumbers.contains(bonus)) {
-            throw new IllegalArgumentException("[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다.");
+    private WinningLotto createWinningLottoLoop() {
+        while (true) {
+            try {
+                List<Integer> winningNumbers = inputWinningNumbersLoop();
+                int bonus = inputBonusLoop();
+
+                return lottoService.createWinningLotto(winningNumbers, bonus);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 }

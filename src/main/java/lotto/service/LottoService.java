@@ -1,8 +1,8 @@
 package lotto.service;
 
-import camp.nextstep.edu.missionutils.Randoms;
 import lotto.config.LottoSettings;
 import lotto.domain.Lotto;
+import lotto.domain.LottoFactory;
 import lotto.domain.Rank;
 import lotto.domain.WinningLotto;
 import lotto.dto.LottoResultDto;
@@ -10,25 +10,29 @@ import lotto.dto.LottoResultDto;
 import java.util.*;
 
 public class LottoService {
-    LottoSettings settings;
+    private final LottoFactory factory;
+    private final LottoSettings settings;
 
-    public LottoService(LottoSettings settings) {
+    public LottoService(LottoFactory factory, LottoSettings settings) {
+        this.factory = factory;
         this.settings = settings;
     }
 
     public List<Lotto> buyLottos(int money) {
+        validateMoney(money);
         int count = money / settings.getUnit();
 
         List<Lotto> lottos = new ArrayList<>();
 
         for (int i = 0; i < count; ++i) {
-            lottos.add(generateLotto());
+            lottos.add(factory.createRadom());
         }
+
         return lottos;
     }
 
-    private Lotto generateLotto() {
-        return new Lotto(Randoms.pickUniqueNumbersInRange(settings.getMinLottoNumber(), settings.getMaxLottoNumber(), settings.getLottoNumberPickCount()));
+    public WinningLotto createWinningLotto(List<Integer> numbers, int bonus) {
+        return factory.createWinningLotto(numbers, bonus);
     }
 
     public LottoResultDto checkResult(List<Lotto> userLottos, WinningLotto winningLotto) {
@@ -46,5 +50,17 @@ public class LottoService {
         double profitRate = (double) totalPrize / totalSpent * 100;
 
         return new LottoResultDto(result, profitRate);
+    }
+
+    private void validateMoney(int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("[ERROR] 음수는 입력할 수 없습니다.");
+        }
+        if (value < settings.getUnit()) {
+            throw new IllegalArgumentException("[ERROR] 최소 " + settings.getUnit() + "원 이상이어야 합니다.");
+        }
+        if (value % settings.getUnit() != 0) {
+            throw new IllegalArgumentException("[ERROR] 구입 금액이 " + settings.getUnit() + "원 단위이어야 합니다.");
+        }
     }
 }
