@@ -31,8 +31,12 @@ public class LottoService {
         return lottos;
     }
 
-    public WinningLotto createWinningLotto(List<Integer> numbers, int bonus) {
-        return factory.createWinningLotto(numbers, bonus);
+    public Lotto createLotto(List<Integer> Numbers){
+        return factory.create(Numbers);
+    }
+
+    public WinningLotto createWinningLotto(Lotto winningLotto, int bonus) {
+        return factory.createWinningLotto(winningLotto, bonus);
     }
 
     public LottoResultDto checkResult(List<Lotto> userLottos, WinningLotto winningLotto) {

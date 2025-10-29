@@ -64,9 +64,10 @@ public class LottoController {
         while (true) {
             try {
                 List<Integer> winningNumbers = inputWinningNumbersLoop();
+                Lotto winningLotto = lottoService.createLotto(winningNumbers);
                 int bonus = inputBonusLoop();
 
-                return lottoService.createWinningLotto(winningNumbers, bonus);
+                return lottoService.createWinningLotto(winningLotto, bonus);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }

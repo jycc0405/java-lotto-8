@@ -31,11 +31,11 @@ public class LottoFactory {
         ));
     }
 
-    public WinningLotto createWinningLotto(List<Integer> numbers, int bonus) {
+    public WinningLotto createWinningLotto(Lotto winningLotto, int bonus) {
         validateRange(bonus);
-        validateBonusNotInWinningNumbers(numbers, bonus);
+        validateBonusNotInWinningNumbers(winningLotto.getLottoNumbers(), bonus);
 
-        return new WinningLotto(create(numbers), bonus);
+        return new WinningLotto(winningLotto, bonus);
     }
 
     private void validateNotNull(List<Integer> numbers) {
