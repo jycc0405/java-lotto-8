@@ -1,6 +1,8 @@
 package lotto.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import lotto.common.ErrorMessage;
+import lotto.exception.LottoException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -41,7 +43,9 @@ public class InputView {
 
     private void validateNotEmpty(String s) {
         if (s.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 입력이 비었습니다.");
+            throw new LottoException(
+                    ErrorMessage.INPUT_EMPTY
+            );
         }
     }
 
@@ -49,7 +53,9 @@ public class InputView {
         try {
             return Integer.parseInt(s);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("[ERROR] 숫자 형식이 아닙니다.");
+            throw new LottoException(
+                    ErrorMessage.INVALID_NUMBER_FORMAT
+            );
         }
     }
 

@@ -1,7 +1,9 @@
 package lotto.domain;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import lotto.common.ErrorMessage;
 import lotto.config.LottoSettings;
+import lotto.exception.LottoException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -40,40 +42,48 @@ public class LottoFactory {
 
     private void validateNotNull(List<Integer> numbers) {
         if (numbers.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호가 비었습니다.");
+            throw new LottoException(
+                    ErrorMessage.INVALID_LOTTO_EMPTY
+            );
         }
     }
 
     private void validateSize(List<Integer> numbers) {
         if (numbers.size() != settings.lottoNumberPickCount()) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 " + settings.lottoNumberPickCount() + "개여야 합니다.");
+            throw new LottoException(
+                    String.format(ErrorMessage.INVALID_LOTTO_NUMBER_COUNT, settings.lottoNumberPickCount())
+            );
         }
     }
 
     private void validateRange(List<Integer> numbers) {
         for (int num : numbers) {
-            if (num < settings.minLottoNumber() || num > settings.maxLottoNumber()) {
-                throw new IllegalArgumentException("[ERROR] 로또 번호의 범위는 " + settings.minLottoNumber() + " ~ " + settings.maxLottoNumber() + " 사이입니다.");
-            }
+            validateRange(num);
         }
     }
 
     private void validateRange(int number) {
         if (number < settings.minLottoNumber() || number > settings.maxLottoNumber()) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호의 범위는 " + settings.minLottoNumber() + " ~ " + settings.maxLottoNumber() + " 사이입니다.");
+            throw new LottoException(
+                    String.format(ErrorMessage.INVALID_LOTTO_NUMBER_RANGE, settings.minLottoNumber(), settings.maxLottoNumber())
+            );
         }
     }
 
     private void validateNoDuplicates(List<Integer> numbers) {
         Set<Integer> unique = new HashSet<>(numbers);
         if (unique.size() != numbers.size()) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 중복될 수 없습니다.");
+            throw new LottoException(
+                    ErrorMessage.DUPLICATED_LOTTO_NUMBER
+            );
         }
     }
 
     private void validateBonusNotInWinningNumbers(List<Integer> winningNumbers, int bonus) {
         if (winningNumbers.contains(bonus)) {
-            throw new IllegalArgumentException("[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다.");
+            throw new LottoException(
+                    ErrorMessage.INVALID_BONUS_DUPLICATE
+            );
         }
     }
 }

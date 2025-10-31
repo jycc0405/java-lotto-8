@@ -1,11 +1,13 @@
 package lotto.service;
 
+import lotto.common.ErrorMessage;
 import lotto.config.LottoSettings;
 import lotto.domain.Lotto;
 import lotto.domain.LottoFactory;
 import lotto.domain.Rank;
 import lotto.domain.WinningLotto;
 import lotto.dto.LottoResultDto;
+import lotto.exception.LottoException;
 
 import java.util.*;
 
@@ -31,7 +33,7 @@ public class LottoService {
         return lottos;
     }
 
-    public Lotto createLotto(List<Integer> Numbers){
+    public Lotto createLotto(List<Integer> Numbers) {
         return factory.create(Numbers);
     }
 
@@ -58,13 +60,19 @@ public class LottoService {
 
     private void validateMoney(int value) {
         if (value < 0) {
-            throw new IllegalArgumentException("[ERROR] 음수는 입력할 수 없습니다.");
+            throw new LottoException(
+                    ErrorMessage.NEGATIVE_MONEY
+            );
         }
         if (value < settings.lottoPriceUnit()) {
-            throw new IllegalArgumentException("[ERROR] 최소 " + settings.lottoPriceUnit() + "원 이상이어야 합니다.");
+            throw new LottoException(
+                    String.format(ErrorMessage.MINIMUM_MONEY, settings.lottoPriceUnit())
+            );
         }
         if (value % settings.lottoPriceUnit() != 0) {
-            throw new IllegalArgumentException("[ERROR] 구입 금액이 " + settings.lottoPriceUnit() + "원 단위이어야 합니다.");
+            throw new LottoException(
+                    String.format(ErrorMessage.INVALID_MONEY_UNIT, settings.lottoPriceUnit())
+            );
         }
     }
 }
