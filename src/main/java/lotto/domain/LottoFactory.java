@@ -25,9 +25,9 @@ public class LottoFactory {
 
     public Lotto createRadom() {
         return create(Randoms.pickUniqueNumbersInRange(
-                settings.getMinLottoNumber(),
-                settings.getMaxLottoNumber(),
-                settings.getLottoNumberPickCount()
+                settings.minLottoNumber(),
+                settings.maxLottoNumber(),
+                settings.lottoNumberPickCount()
         ));
     }
 
@@ -45,22 +45,22 @@ public class LottoFactory {
     }
 
     private void validateSize(List<Integer> numbers) {
-        if (numbers.size() != settings.getLottoNumberPickCount()) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 " + settings.getLottoNumberPickCount() + "개여야 합니다.");
+        if (numbers.size() != settings.lottoNumberPickCount()) {
+            throw new IllegalArgumentException("[ERROR] 로또 번호는 " + settings.lottoNumberPickCount() + "개여야 합니다.");
         }
     }
 
     private void validateRange(List<Integer> numbers) {
         for (int num : numbers) {
-            if (num < settings.getMinLottoNumber() || num > settings.getMaxLottoNumber()) {
-                throw new IllegalArgumentException("[ERROR] 로또 번호의 범위는 " + settings.getMinLottoNumber() + " ~ " + settings.getMaxLottoNumber() + " 사이입니다.");
+            if (num < settings.minLottoNumber() || num > settings.maxLottoNumber()) {
+                throw new IllegalArgumentException("[ERROR] 로또 번호의 범위는 " + settings.minLottoNumber() + " ~ " + settings.maxLottoNumber() + " 사이입니다.");
             }
         }
     }
 
     private void validateRange(int number) {
-        if (number < settings.getMinLottoNumber() || number > settings.getMaxLottoNumber()) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호의 범위는 " + settings.getMinLottoNumber() + " ~ " + settings.getMaxLottoNumber() + " 사이입니다.");
+        if (number < settings.minLottoNumber() || number > settings.maxLottoNumber()) {
+            throw new IllegalArgumentException("[ERROR] 로또 번호의 범위는 " + settings.minLottoNumber() + " ~ " + settings.maxLottoNumber() + " 사이입니다.");
         }
     }
 

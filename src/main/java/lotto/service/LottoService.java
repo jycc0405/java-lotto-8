@@ -20,7 +20,7 @@ public class LottoService {
 
     public List<Lotto> buyLottos(int money) {
         validateMoney(money);
-        int count = money / settings.getUnit();
+        int count = money / settings.lottoPriceUnit();
 
         List<Lotto> lottos = new ArrayList<>();
 
@@ -50,7 +50,7 @@ public class LottoService {
                 .mapToInt(e -> e.getKey().getPrize() * e.getValue())
                 .sum();
 
-        int totalSpent = userLottos.size() * settings.getUnit();
+        int totalSpent = userLottos.size() * settings.lottoPriceUnit();
         double profitRate = (double) totalPrize / totalSpent * 100;
 
         return new LottoResultDto(result, profitRate);
@@ -60,11 +60,11 @@ public class LottoService {
         if (value < 0) {
             throw new IllegalArgumentException("[ERROR] 음수는 입력할 수 없습니다.");
         }
-        if (value < settings.getUnit()) {
-            throw new IllegalArgumentException("[ERROR] 최소 " + settings.getUnit() + "원 이상이어야 합니다.");
+        if (value < settings.lottoPriceUnit()) {
+            throw new IllegalArgumentException("[ERROR] 최소 " + settings.lottoPriceUnit() + "원 이상이어야 합니다.");
         }
-        if (value % settings.getUnit() != 0) {
-            throw new IllegalArgumentException("[ERROR] 구입 금액이 " + settings.getUnit() + "원 단위이어야 합니다.");
+        if (value % settings.lottoPriceUnit() != 0) {
+            throw new IllegalArgumentException("[ERROR] 구입 금액이 " + settings.lottoPriceUnit() + "원 단위이어야 합니다.");
         }
     }
 }

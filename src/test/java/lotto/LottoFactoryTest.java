@@ -46,14 +46,12 @@ class LottoFactoryTest {
         Lotto lotto = lottoFactory.createRadom();
 
         //크기 검사
-        assertThat(lotto.getLottoNumbers()).hasSize(settings.getLottoNumberPickCount());
+        assertThat(lotto.getLottoNumbers()).hasSize(settings.lottoNumberPickCount());
         //정렬 검사
         assertThat(lotto.getLottoNumbers()).isSorted();
         //범위 검사
-        lotto.getLottoNumbers().forEach(n->{
-            assertThat(n).isBetween(settings.getMinLottoNumber(),settings.getMaxLottoNumber());
-        });
+        lotto.getLottoNumbers().forEach(n-> assertThat(n).isBetween(settings.minLottoNumber(),settings.maxLottoNumber()));
         //중복 검사
-        assertThat(lotto.getLottoNumbers().stream().distinct().count()).isEqualTo(settings.getLottoNumberPickCount());
+        assertThat(lotto.getLottoNumbers().stream().distinct().count()).isEqualTo(settings.lottoNumberPickCount());
     }
 }

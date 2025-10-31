@@ -17,21 +17,21 @@ public class LottoServiceTest {
     @DisplayName("구입 금액이 최소 단위보다 작으면 예외")
     @Test
     void moneyTooSmallThrows() {
-        assertThatThrownBy(() -> service.buyLottos(settings.getUnit() - 100))
+        assertThatThrownBy(() -> service.buyLottos(settings.lottoPriceUnit() - 100))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("구입 금액이 단위로 나누어지지 않으면 예외")
     @Test
     void moneyNotMultipleThrows() {
-        assertThatThrownBy(() -> service.buyLottos(settings.getUnit() + 500))
+        assertThatThrownBy(() -> service.buyLottos(settings.lottoPriceUnit() + 500))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("정상 금액이면 해당 장수만큼 로또 발행")
     @Test
     void buyLottosGeneratesCorrectCount() {
-        int money = settings.getUnit() * 3;
+        int money = settings.lottoPriceUnit() * 3;
         assertThat(service.buyLottos(money)).hasSize(3);
     }
 }

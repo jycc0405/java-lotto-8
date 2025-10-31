@@ -52,11 +52,11 @@ public class LottoResultCalculationTest {
                         Rank.THIRD.getPrize() +
                         Rank.FOURTH.getPrize() +
                         Rank.FIFTH.getPrize();
-        double expectedRate = (double) totalPrize / (user.size() * settings.getUnit()) * 100;
-        assertThat(result.profitRate()).isCloseTo(expectedRate, withinPercentage(0.0001));
+        double expectedRate = (double) totalPrize / (user.size() * settings.lottoPriceUnit()) * 100;
+        assertThat(result.profitRate()).isCloseTo(expectedRate, withinPercentage());
     }
 
-    private org.assertj.core.data.Percentage withinPercentage(double p) {
-        return org.assertj.core.data.Percentage.withPercentage(p);
+    private org.assertj.core.data.Percentage withinPercentage() {
+        return org.assertj.core.data.Percentage.withPercentage(1.0E-4);
     }
 }
